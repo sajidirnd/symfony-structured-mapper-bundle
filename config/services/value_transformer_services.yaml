@@ -32,6 +32,6 @@ services:
   structured_mapper.value_transformer.abstract_entity_resolve_transformer:
     abstract: true
     lazy: true
-    class: Euu\StructuredMapper\ValueTransformer\EntityResolveTransform\ResolveEntityTransformer
+    class: Euu\StructuredMapper\ValueTransformer\EntityResolveTransform\EntityResolveTransformer
     tags:
       - { name: structured_mapper.value_transformer }
