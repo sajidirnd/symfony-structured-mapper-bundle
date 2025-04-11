@@ -1,0 +1,18 @@
+services:
+  structured_mapper.registry.value_transformers:
+    lazy: true
+    class: Euu\StructuredMapper\ValueTransformer\ValueTransformerRegistry
+    tags:
+      - { name: structured_mapper.registry }
+
+  structured_mapper.registry.mappers:
+    lazy: true
+    class: Euu\StructuredMapper\Mapper\MapperRegistry
+    tags:
+      - { name: structured_mapper.registry }
+
+  structured_mapper.registry.structure_readers:
+    lazy: true
+    class: Euu\StructuredMapper\StructureReader\LazyRegisteredStructure\StructureReaderRegistry
+    tags:
+      - { name: structured_mapper.registry }

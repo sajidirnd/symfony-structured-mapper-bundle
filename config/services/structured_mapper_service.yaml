@@ -1,0 +1,15 @@
+services:
+
+  structured_mapper:
+    public: true
+    shared: true
+    class: Euu\StructuredMapper\StructuredMapper
+    lazy: true
+    arguments:
+      $mapperRegistry: '@structured_mapper.registry.mappers'
+      $structureReader: '@structured_mapper.reader.lazy_registered_structure_reader'
+      $defaultMapperContext: '%structured_mapper.default_mapper_context%'
+      #$defaultMappingContext: '%structured_mapper.default_mapping_context%'
+      #$defaultTransformerContext: '%structured_mapper.default_transformer_context%'
+
+  Euu\StructuredMapper\StructuredMapper: '@structured_mapper'

@@ -1,0 +1,8 @@
+services:
+  structured_mapper.structure_discovery.attribute_structure_discovery:
+    lazy: true
+    class: Euu\Bundle\StructuredMapperBundle\StructuredMapper\StructureDiscovery\AttributeStructureDiscovery
+    arguments:
+      $readDirectory: '%structured_mapper.cache.preload.readers.attribute_reader.read_directory%'
+      $instanceOf: '%structured_mapper.cache.preload.readers.attribute_reader.instance_of%'
+    tags: [ 'structured_mapper.structure_discovery' ]

@@ -1,0 +1,11 @@
+services:
+  structured_mapper.kernel_cache.structure_kernel_cache_manager:
+    lazy: true
+    class: Euu\Bundle\StructuredMapperBundle\KernelCache\StructureKernelCacheManager
+    arguments:
+      $readers: !tagged_iterator 'structured_mapper.structure_discovery'
+      $cachedStructureRegistry: '@structured_mapper.registry.structures'
+      $enabled: '%structured_mapper.cache.enabled%'
+    tags:
+      - { name: kernel.cache_warmer }
+      - { name: kernel.cache_clearer }

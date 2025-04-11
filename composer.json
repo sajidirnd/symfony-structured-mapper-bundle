@@ -1,0 +1,84 @@
+{
+  "name": "emreuyguc/structured-mapper-bundle",
+  "description": "A Symfony bundle for the emreuyguc/structured-mapper package that provides powerful object-to-object data transformation using structured mapping.",
+  "type": "symfony-bundle",
+  "keywords": [
+    "emreuyguc",
+    "structured-mapper",
+    "php",
+    "php-mapper",
+    "mapper",
+    "data-mapper",
+    "entity-mapper",
+    "object-mapper",
+    "dto-mapper",
+    "data-transformer",
+    "dto",
+    "mapping",
+    "transformation",
+    "object-to-object",
+    "symfony",
+    "bundle"
+  ],
+  "support": {
+    "email": "emreuyguc@gmail.com",
+    "source": "https://github.com/emreuyguc/symfony-structured-mapper-bundle"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/emreuyguc/symfony-structured-mapper-bundle",
+  "authors": [
+    {
+      "name": "Emre Utku Uyguç",
+      "email": "emreuyguc@gmail.com",
+      "homepage": "https://emreuyguc.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=8.2",
+    "doctrine/orm": "^3.3",
+    "emreuyguc/structured-mapper": "^0.1",
+    "psr/cache": "^3.0",
+    "symfony/config": "^7.2",
+    "symfony/dependency-injection": "^7.2",
+    "symfony/http-kernel": "^7.2"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.0",
+    "mockery/mockery": "^1.5",
+    "pestphp/pest": "^3.7",
+    "phpstan/extension-installer": "^1.4",
+    "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-deprecation-rules": "^2.0",
+    "phpunit/phpunit": "^11.5",
+    "shipmonk/composer-dependency-analyser": "^1.8",
+    "symfony/var-dumper": "^7.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Euu\\Bundle\\StructuredMapperBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Euu\\Bundle\\StructuredMapperBundle\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "analyze-composer": "@php vendor/bin/composer-dependency-analyser",
+    "analyze": "@php vendor/bin/phpstan analyse src/",
+    "format": "@php vendor/bin/php-cs-fixer fix src/ --allow-risy=yes",
+    "format-dry-run": "@php vendor/bin/php-cs-fixer fix src/ --dry-run --allow-risy=yes",
+    "test": "@php vendor/bin/pest"
+  },
+  "prefer-stable": true,
+  "minimum-stability": "dev",
+  "config": {
+    "optimize-autoloader": true,
+    "allow-plugins": true,
+    "sort-packages": true,
+    "preferred-install": {
+      "*": "dist"
+    }
+  }
+}

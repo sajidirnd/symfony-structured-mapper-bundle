@@ -1,0 +1,37 @@
+services:
+  structured_mapper.value_transformer.object_transformer:
+    lazy: true
+    class: Euu\StructuredMapper\ValueTransformer\WithMapperTransform\WithMapperTransformer
+    tags:
+      - { name: structured_mapper.value_transformer }
+
+  structured_mapper.value_transformer.array_transformer:
+    lazy: true
+    class: Euu\StructuredMapper\ValueTransformer\ArrayItemTransform\ArrayItemTransformer
+    tags:
+      - { name: structured_mapper.value_transformer }
+
+  structured_mapper.value_transformer.enum_transformer:
+    lazy: true
+    class: Euu\StructuredMapper\ValueTransformer\EnumTransform\EnumTransformer
+    tags:
+      - { name: structured_mapper.value_transformer }
+
+  structured_mapper.value_transformer.explode_transformer:
+    lazy: true
+    class: Euu\StructuredMapper\ValueTransformer\ExplodeTransform\ExplodeTransformer
+    tags:
+      - { name: structured_mapper.value_transformer }
+
+  structured_mapper.value_transformer.implode_transformer:
+    lazy: true
+    class: Euu\StructuredMapper\ValueTransformer\ImplodeTransform\ImplodeTransformer
+    tags:
+      - { name: structured_mapper.value_transformer }
+
+  structured_mapper.value_transformer.abstract_entity_resolve_transformer:
+    abstract: true
+    lazy: true
+    class: Euu\StructuredMapper\ValueTransformer\EntityResolveTransform\ResolveEntityTransformer
+    tags:
+      - { name: structured_mapper.value_transformer }

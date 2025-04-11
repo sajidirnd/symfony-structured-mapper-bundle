@@ -1,0 +1,15 @@
+services:
+  structured_mapper.reader.attribute_structure_reader:
+    lazy: true
+    class: Euu\StructuredMapper\StructureReader\AttributeStructure\AttributeStructureReader
+    tags:
+      - { name: structured_mapper.structure_reader }
+
+  structured_mapper.reader.lazy_registered_structure_reader:
+    lazy: true
+    class: Euu\StructuredMapper\StructureReader\LazyRegisteredStructure\LazyRegisteredStructureReader
+    arguments:
+      $structureReaderRegistry: '@structured_mapper.registry.structure_readers'
+      $structureRegistry: '@structured_mapper.registry.structures'
+    tags:
+      #- { name: structured_mapper.structure_reader }
