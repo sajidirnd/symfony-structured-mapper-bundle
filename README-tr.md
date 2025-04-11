@@ -45,7 +45,7 @@ Buna ek olarak container içerisinde `structured_mapper` servisini çağırabili
 ```php
 use Euu\Bundle\StructuredMapperBundle\StructuredMapper\StructuredMapper;
 
-$mapper = $container->get(StructuredMapper::class);
+$mapper = $container->get('structured_mapper');
 
 $inputDto = new InputDto();
 
