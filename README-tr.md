@@ -45,13 +45,33 @@ Buna ek olarak container içerisinde `structured_mapper` servisini çağırabili
 ```php
 use Euu\Bundle\StructuredMapperBundle\StructuredMapper\StructuredMapper;
 
-$mapper = $container->get(StructuredMapper::class);
+$mapper = $container->get('structured_mapper');
 
 $inputDto = new InputDto();
 
 $mapper->map(sourceObject: $source, targetClass: MyEntity::class, context [
     //object mapper context parameters..
 ]);
+```
+
+### Konfigrasyonlar
+
+src/config/packages/structured_mapper.yaml
+```yaml
+structured_mapper:
+    default_mapper_context:
+        # see ObjectMapper settings
+    cache:
+        enabled: true
+        ttl: 3600
+        prefix: 'structured_mapper.'
+        service: 'cache.app'
+        preload:
+            enabled: true
+            readers:
+                attribute_reader:
+                    instance_of: ~ #example : 'App\Dto\BaseDto'
+                    read_directory: ~ #currently not supported
 ```
 
 ### Populate
