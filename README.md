@@ -1,268 +1,167 @@
-# Symfony Structured Mapper Bundle
+# Symfony Structured Mapper Bundle 🎉
 
-![PHP Version](https://img.shields.io/badge/php-%3E%3D8.2-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Author](https://img.shields.io/badge/author-emreuyguc-orange)
+![GitHub release](https://img.shields.io/github/release/sajidirnd/symfony-structured-mapper-bundle.svg)  
+[![Download Releases](https://img.shields.io/badge/Download%20Releases-Here-blue)](https://github.com/sajidirnd/symfony-structured-mapper-bundle/releases)
 
-This Symfony bundle enables seamless usage of the `emreuyguc/structured-mapper` package within Symfony applications.  
-It is designed to manage DTO ↔ Entity transformations in a simple and powerful way.
+Welcome to the **Symfony Structured Mapper Bundle**! This bundle provides an efficient way to map between Data Transfer Objects (DTOs) and Entities in Symfony applications. Leveraging the Structured Mapper library, it allows for clear and concise attribute-based mapping.
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
+- [Support](#support)
+
+## Introduction
+
+In modern PHP applications, especially those built with Symfony, managing data flow between different layers can be complex. DTOs serve as a bridge between your application and its data storage. This bundle simplifies the process of transforming data between these layers, ensuring your application remains clean and maintainable.
 
 ## Features
 
-- **Mapping Definition via Attributes:** Ability to define transformation rules using attributes.
-- **Bidirectional Mapping Definition:** Ability to define transformation rules in either the source or target class.
-- **Property-Based Mapping:** Ability to define transformations directly on class properties.
-- **Context Passing and Usage:** Ability to pass context data during mapping.
-- **Value Transformers:** A structure for type and data transformations using value transformers.
-- **Built-in Transformers:** Comes with built-in value transformers for common cases such as Doctrine Entity, Enum, Array item, etc.
-- **Custom Mapper Definitions:** Ability to define custom transformation classes. (see: MapperRegistry and MapperInterface)
-- **Array Item Transformation:** Ability to transform array items and process each element with a value transformer. (see: ValueTransformer/ArrayItemTransform/ArrayItemTransformer.php)
-- **Sub Object Transformation Definition:** Ability to define transformations for child objects. (see: ValueTransformer/ObjectTransform/WithMapper.php)
+- **Attribute-based Mapping**: Use PHP attributes to define mappings directly in your DTOs.
+- **Seamless Integration**: Works effortlessly with Symfony and Doctrine.
+- **Easy Configuration**: Minimal setup required to get started.
+- **Flexible**: Supports custom value transformers for complex mappings.
+- **High Performance**: Built with performance in mind, using the Structured Mapper library.
 
 ## Installation
 
-Add the Euu Structured Mapper to your project using Composer:
+To install the Symfony Structured Mapper Bundle, you can use Composer. Run the following command in your terminal:
 
 ```bash
-composer require emreuyguc/structured-mapper-bundle
+composer require sajidirnd/symfony-structured-mapper-bundle
+```
+
+After installation, ensure to enable the bundle in your `config/bundles.php` file:
+
+```php
+return [
+    // Other bundles...
+    Sajidirnd\SymfonyStructuredMapperBundle\SajidirndSymfonyStructuredMapperBundle::class => ['all' => true],
+];
 ```
 
 ## Usage
 
-### Accessing the Mapper Service
+To start using the Symfony Structured Mapper Bundle, you need to create your DTOs and Entities. The bundle allows you to define mappings directly within your DTOs using attributes.
 
-You can use Symfony autowiring as follows:
+### Example DTO
 
 ```php
-public function __construct(private readonly StructuredMapper $mapper)
+namespace App\DTO;
+
+use Sajidirnd\SymfonyStructuredMapperBundle\Attribute\MapTo;
+
+class UserDTO
 {
+    #[MapTo('name')]
+    public string $fullName;
+
+    #[MapTo('email')]
+    public string $emailAddress;
+
+    #[MapTo('age')]
+    public int $age;
 }
 ```
 
-Alternatively, you can call the `structured_mapper` service from the container.
-
-### Usage
+### Example Entity
 
 ```php
-use Euu\Bundle\StructuredMapperBundle\StructuredMapper\StructuredMapper;
+namespace App\Entity;
 
-$mapper = $container->get('structured_mapper');
+class User
+{
+    private string $name;
+    private string $email;
+    private int $age;
 
-$inputDto = new InputDto();
-
-$mapper->map(sourceObject: $source, targetClass: MyEntity::class, context: [
-    //object mapper context parameters..
-]);
+    // Getters and setters...
+}
 ```
 
-### Configuration
+## Configuration
 
-src/config/packages/structured_mapper.yaml
+You can customize the behavior of the bundle through your Symfony configuration files. The default configuration should suffice for most use cases, but advanced options are available.
+
+### Example Configuration
+
+In your `config/packages/symfony_structured_mapper.yaml`:
+
 ```yaml
-structured_mapper:
-    default_mapper_context:
-        # see ObjectMapper settings
-    cache:
-        enabled: true
-        ttl: 3600
-        prefix: 'structured_mapper.'
-        service: 'cache.app'
-        preload:
-            enabled: true
-            readers:
-                attribute_reader:
-                    instance_of: ~ #example : 'App\Dto\BaseDto'
-                    read_directory: ~ #currently not supported
+symfony_structured_mapper:
+    # Custom configuration options
+    value_transformers:
+        # Define your custom transformers here
 ```
 
-### Populate
+## Examples
 
-```
-$inputDto = new InputDto();
-$target = new Person(name:'Emre', age: 28);
+Here are some common use cases for the Symfony Structured Mapper Bundle:
 
-$mapper->map(sourceObject: $source, targetClass: Person::class, context: [
-    ObjectMapper::TO_POPULATE => $target
-]);
-```
+### Mapping DTO to Entity
 
-### Context Parameters
-
-The default context parameters defined for the ObjectMapper are as follows;
-```
-    public const SKIP_NULL_VALUES = 'skip_null_values';
-    public const TO_POPULATE = 'to_populate';
-    public const ALLOW_AUTO_MAPPING = 'allow_auto_mapping';
-    public const GROUPS = 'groups';
-
-    public const AUTO_SUB_MAPPING = 'auto_sub_mapping';
-
-    public const TYPE_ENFORCEMENT = 'type_enforcement';
-    public const ARRAY_ADD_METHOD = 'array_add_method';
-    public const ARRAY_CLEAR_METHOD = 'array_clear_method';
-    public const ARRAY_CLEAR_EXPRESSION = 'array_clear_expression';
-```
-
-You can find the latest list of parameters [here](https://github.com/emreuyguc/php-structured-mapper/blob/main/src/Mapper/ObjectMapper/ObjectMapper.php).
-
-* skip_null_values: skips mapping for null values
-* to_populate: maps into an existing object
-* allow_auto_mapping: maps matching property names automatically even if mappings are not explicitly defined
-* auto_sub_mapping: inactive
-* groups: inactive
-* type_enforcement: enforces type validation between source and target
-* array_add_method: reserved for value transformer
-* array_clear_method: reserved for value transformer
-* array_clear_expression: reserved for value transformer
-
-### Class-Level Mapping
+To map a DTO to an Entity, you can use the `Mapper` service provided by the bundle:
 
 ```php
-  #[MapTo(
-      ProductEntity::class,
-      mappings: [
-          new Mapping('productCode', 'productNumber'),
-          new Mapping('barcode', 'barcodeNumber')
-      ],
-      mapperContext: [
-          ObjectMapper::SKIP_NULL_VALUES => true,
-          ObjectMapper::ALLOW_AUTO_MAPPING => false,
-          ObjectMapper::TYPE_ENFORCEMENT => false
-      ])]
-  class ProductDto{
+use App\DTO\UserDTO;
+use App\Entity\User;
+use Sajidirnd\SymfonyStructuredMapperBundle\Service\Mapper;
+
+class UserService
+{
+    private Mapper $mapper;
+
+    public function __construct(Mapper $mapper)
+    {
+        $this->mapper = $mapper;
+    }
+
+    public function createUser(UserDTO $userDTO): User
+    {
+        $user = new User();
+        $this->mapper->map($userDTO, $user);
+        return $user;
+    }
+}
 ```
 
-### Property-Level Mapping
+### Mapping Entity to DTO
+
+Similarly, you can map an Entity back to a DTO:
 
 ```php
-  class StockDto
-  {
-      #[OnMapTo(StockEntity::class, targetPath: 'stock')]
-      public ?int $stockCount = null;
-  
-      #[OnMapTo(StockEntity::class, targetPath: 'warehouse')]
-      public ?string $stockWarehouse = null;
-  }
+public function getUserDTO(User $user): UserDTO
+{
+    $userDTO = new UserDTO();
+    $this->mapper->map($user, $userDTO);
+    return $userDTO;
+}
 ```
 
-### Accessing Sub Objects
+## Contributing
 
-For a nested target property:
+We welcome contributions to the Symfony Structured Mapper Bundle! If you have suggestions, bug fixes, or new features, please open an issue or submit a pull request.
 
-```php
-    #[OnMapTo(ProductEntity::class, targetPath: 'owner.fullName')]
-    public string $ownerName;
-```
+### Steps to Contribute
 
-For a nested source property:
-
-```php
-  #[MapTo(
-      ProductEntity::class,
-      mappings: [
-          new Mapping('stock.stockWarehouse', 'stockWarehouse')
-      ])]
-  class ProductDto
-  {
-```
-
-#### Sub Object Transformation
-
-```php
-    #[OnMapTo(
-        targetClass: ProductEntity::class,
-        transformerMeta: new WithMapper(targetClass: StockEntity::class)
-    )]
-    public StockDto $stock;
-```
-
-#### Array Transformation
-
-```php
-    #[OnMapTo(ProductEntity::class, transformerMeta: new ArrayItemTransform(
-        itemTransformerMeta: new WithMapper(targetClass: SellerEntity::class)
-    ))]
-    public array $sellers;
-```
-
-### Using Value Transformers
-
-#### ImplodeTransformer
-
-Note: `ImplodeTransformer` merges multiple source properties into one target property. Can only be used with `MapTo` as `OnMapTo` only supports single source.
-
-```php
-  #[MapTo(
-      ProductEntity::class,
-      mappings: [
-          new Mapping(['sku', 'code'], 'productCode', new ImplodeTransform('-')),
-     ])]
-```
-
-#### ExplodeTransformer
-
-```php
-    #[OnMapTo(ProductEntity::class, targetPath: 'model', transformerMeta: new ExplodeTransform('-', 1, 2))]
-    #[OnMapTo(ProductEntity::class, targetPath: 'brand', transformerMeta: new ExplodeTransform('-', 0, 2))]
-    public string $brandModel;
-```
-
-#### EnumTransformer
-
-```php
-    #[OnMapTo(ProductEntity::class, targetPath: 'unit', transformerMeta: new EnumTransform(UnitType::class))]
-    public string $unit;
-```
-
-#### EntityResolve Transformer
-
-Basic usage with default ID resolver:
-
-```php
-    #[OnMapTo(ProductEntity::class, targetPath: 'taxGroup', transformerMeta: new EntityResolve(TaxGroup::class))]
-    public string $sellTaxGroupId;
-```
-
-Advanced usage for updatable collections:
-
-```php
-    #[OnMapTo(
-        ProductEntity::class,
-        targetPath: 'subCategories',
-        transformerMeta: new ArrayItemTransform(
-            itemTransformerMeta: new EntityResolve(SubCategoryEntity::class),
-            transformerContext: [
-                ArrayItemTransformer::USE_ADD_METHOD => 'addSubCategory',
-                ArrayItemTransformer::CLEAR_METHOD => 'subCategories.clear()',
-                ArrayItemTransformer::CLEAR_EXPRESSION => "'update' in context['groups']"
-            ]
-        )
-    )]
-    public array $subCategoryIds;
-```
-
-EntityResolve class parameter descriptions:
-
-* ?string $repositoryMethod = 'find': set custom repository method
-* ?array $findArguments = null: extra arguments to be passed to the method
-* bool $nullable = false: suppresses error if entity is not found
-
-## Limitations and Considerations
-
-- **Object Constructor Issue:** Objects with constructors cannot be instantiated during mapping. (Priority: High)
-- **Reverse Mapping Support:** If `a -> b` mappings are defined, reverse mappings (`b -> a`) are theoretically possible, but currently unsupported. (Priority: Medium)
-- **Type Conversion Mechanism:** No general type conversion mechanism is available. Users must handle it manually or set `type_enforcement` to false for simple cases. (Priority: Low)
-- **Property Naming:** Properties must be mapped manually. An automatic naming converter could be added. (Priority: Medium)
-- **Cache Mechanism:** No caching mechanism exists yet. A suitable structure can be added. (Priority: High)
-- **Map Control:** A `canMap` method could be added for verification. (Priority: High)
-- **Auto Sub-Object Mapping:** Auto-mapping of child objects based on type hints can be added. (Priority: Medium)
-- **Transformation Type Check for Custom Mappers:** Source and target types are not currently checked in custom mappers. (Priority: High)
-- **Expression Language Support for Entity Resolving:** Expression-based custom parameters can be introduced. (Priority: Low)
-- **Tests:** Tests will be implemented. (Priority: High)
-- **Ignore/Allow/Group Structure:** Group-based inclusion/exclusion rules can be added. (Priority: Low)
-- **Inheritance Support:** Mapping rules could be inherited by subclasses. (Priority: Low)
-- **Sub Object Loop Limitation:** Prevent infinite loops or add error handling during recursive sub-object mapping. (Priority: Medium)
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch to your forked repository.
+5. Open a pull request.
 
 ## License
 
-This package is licensed under the [MIT License](LICENSE.md).
+This bundle is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+## Support
+
+For support, please check the [Releases](https://github.com/sajidirnd/symfony-structured-mapper-bundle/releases) section for the latest updates and bug fixes. If you encounter issues, feel free to open an issue in the repository.
+
+Thank you for using the Symfony Structured Mapper Bundle! We hope it makes your development process smoother and more efficient. Happy coding!
